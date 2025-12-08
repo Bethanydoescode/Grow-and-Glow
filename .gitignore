@@ -1,0 +1,67 @@
+############################
+# Operating System files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Node / React / Vite
+############################
+node_modules/
+dist/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite local server logs
+.vite/
+
+# Build output
+frontend/dist
+frontend/.vite
+
+############################
+# ASP.NET Core / .NET
+############################
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+
+# User Secrets
+**/secrets.json
+
+############################
+# SQLite files
+############################
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+############################
+# VS Code Workspace Files
+############################
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+############################
+# Logs & Temp
+############################
+*.log
+logs/
+temp/
+temp-*/
+
+############################
+# Backup files
+############################
+*.bak
+*.tmp
