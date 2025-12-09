@@ -67,6 +67,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 

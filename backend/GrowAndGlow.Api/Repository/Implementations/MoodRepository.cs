@@ -14,11 +14,18 @@ namespace GrowAndGlow.Api.Repository.Implementations
             _context = context;
         }
 
+        // --------------------- CREATE ---------------------
         public async Task<MoodEntry> CreateMoodEntryAsync(MoodEntry entry)
         {
             _context.MoodEntries.Add(entry);
             await _context.SaveChangesAsync();
             return entry;
+        }
+
+        // ---------------------- READ ----------------------
+        public async Task<MoodEntry?> GetMoodEntryByIdAsync(int entryId)
+        {
+            return await _context.MoodEntries.FirstOrDefaultAsync(m => m.EntryId == entryId);
         }
 
         public async Task<List<MoodEntry>> GetMoodEntriesForUserAsync(int userId)
@@ -60,6 +67,24 @@ namespace GrowAndGlow.Api.Repository.Implementations
             }
 
             return streak;
+        }
+
+        // --------------------- UPDATE ---------------------
+        public async Task UpdateMoodEntryAsync(MoodEntry entry)
+        {
+            _context.MoodEntries.Update(entry);
+        }
+
+        // --------------------- DELETE ---------------------
+        public async Task DeleteMoodEntryAsync(MoodEntry entry)
+        {
+            _context.MoodEntries.Remove(entry);
+        }
+
+        // ------------------ SAVE CHANGES ------------------
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
