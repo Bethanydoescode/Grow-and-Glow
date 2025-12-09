@@ -7,6 +7,9 @@ using GrowAndGlow.Api.Repository.Interfaces;
 using GrowAndGlow.Api.Repository.Implementations;
 using GrowAndGlow.Api.Services.Interfaces;
 using GrowAndGlow.Api.Services.Implementations;
+using Microsoft.OpenApi.Models;
+
+
 
 
 
@@ -36,7 +39,36 @@ else // Use Postgres automatically if connection string exists (deployed cloud)
 // --------------------------------------------------------
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token like: Bearer {token}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+
+
 
 // CORS (allow React dev environment)
 builder.Services.AddCors(options =>
