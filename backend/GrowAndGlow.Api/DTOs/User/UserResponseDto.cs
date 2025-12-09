@@ -1,3 +1,5 @@
+using GrowAndGlow.Api.Models;
+
 namespace GrowAndGlow.Api.DTOs.User
 {
     public class UserResponseDto
@@ -5,7 +7,7 @@ namespace GrowAndGlow.Api.DTOs.User
         public int UserId { get; set; }
         public string DisplayName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string ZodiacSign { get; set; } = string.Empty;
+        public ZodiacSign ZodiacSign { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

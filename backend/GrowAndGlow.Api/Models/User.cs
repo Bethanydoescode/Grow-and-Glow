@@ -17,7 +17,7 @@ namespace GrowAndGlow.Api.Models
         [Required]
         public required string DisplayName { get; set; }
 
-        public string ZodiacSign { get; set; } = string.Empty;
+        public ZodiacSign ZodiacSign { get; set; } 
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

@@ -30,12 +30,18 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     // --------------------------------------------
     // Value Converter - Store List<string> as JSON
     // --------------------------------------------
-    var tagsConverter = new ValueConverter<List<string>?, string>(
+    var tagsConverter = new ValueConverter<List<string>, string>(
         v => JsonSerializer.Serialize(v ?? new List<string>()),
         v => string.IsNullOrEmpty(v)
             ? new List<string>()
             : JsonSerializer.Deserialize<List<string>>(v) ?? new List<string>()
     );
+// Store ZodiacSign enum as string in database
+modelBuilder.Entity<User>()
+    .Property(u => u.ZodiacSign)
+    .HasConversion<string>();
+
+
 
     // --------------------------------------------
     // Value Comparer - Ensures EF change tracking works correctly

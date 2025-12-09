@@ -17,28 +17,29 @@ namespace GrowAndGlow.Api.Services.Implementations
         }
 
         public string CreateAccessToken(User user)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("displayName", user.DisplayName),
-                new Claim("zodiac", user.ZodiacSign ?? string.Empty)
-            };
+{
+    var claims = new[]
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+        new Claim(JwtRegisteredClaimNames.Email, user.Email),
+        new Claim("displayName", user.DisplayName),
+        new Claim("zodiac", user.ZodiacSign.ToString())
+    };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(15),
-                signingCredentials: credentials
-            );
+    var token = new JwtSecurityToken(
+        issuer: _config["Jwt:Issuer"],
+        audience: _config["Jwt:Audience"],
+        claims: claims,
+        expires: DateTime.UtcNow.AddMinutes(15),
+        signingCredentials: credentials
+    );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+    return new JwtSecurityTokenHandler().WriteToken(token);
+}
+
 
         public RefreshToken CreateRefreshToken(int userId)
         {

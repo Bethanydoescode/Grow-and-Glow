@@ -60,7 +60,8 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>(); 
-
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMoodService, MoodService>();
 
 
 // --------------------------------------------------------

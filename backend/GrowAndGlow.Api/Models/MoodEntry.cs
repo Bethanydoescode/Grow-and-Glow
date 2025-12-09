@@ -14,7 +14,7 @@ namespace GrowAndGlow.Api.Models
 
         public string? Note { get; set; }
 
-        public List<string>? Tags { get; set; }
+        public List<string> Tags { get; set; } = new List<string>();
 
         public DateTime EntryDate { get; set; } = DateTime.UtcNow.Date;
 

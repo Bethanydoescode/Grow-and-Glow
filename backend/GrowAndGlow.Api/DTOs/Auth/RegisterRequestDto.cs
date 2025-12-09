@@ -1,4 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using GrowAndGlow.Api.Models;
+using System.Text.Json.Serialization;
+
 
 namespace GrowAndGlow.Api.DTOs.Auth
 {
@@ -17,7 +20,8 @@ namespace GrowAndGlow.Api.DTOs.Auth
         public string DisplayName { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(20)]
-        public string ZodiacSign { get; set; } = string.Empty;
+       [JsonConverter(typeof(JsonStringEnumConverter))]
+public ZodiacSign ZodiacSign { get; set; }
+
     }
 }
