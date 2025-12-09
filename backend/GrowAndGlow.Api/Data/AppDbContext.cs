@@ -1,6 +1,9 @@
-// --- Data/AppDbContext.cs ---
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using GrowAndGlow.Api.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 
 namespace GrowAndGlow.Api.Data
 {
@@ -10,21 +13,55 @@ namespace GrowAndGlow.Api.Data
         {
         }
 
+        // --------------------------------------------------------
+        // DbSets - Database Tables
+        // --------------------------------------------------------
         public DbSet<User> Users { get; set; }
         public DbSet<MoodEntry> MoodEntries { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+// --------------------------------------------------------
+// Model Configuration
+// --------------------------------------------------------
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
 
-            // Relationships
-            // Unique email constraint
+    // --------------------------------------------
+    // Value Converter - Store List<string> as JSON
+    // --------------------------------------------
+    var tagsConverter = new ValueConverter<List<string>?, string>(
+        v => JsonSerializer.Serialize(v ?? new List<string>()),
+        v => string.IsNullOrEmpty(v)
+            ? new List<string>()
+            : JsonSerializer.Deserialize<List<string>>(v) ?? new List<string>()
+    );
+
+    // --------------------------------------------
+    // Value Comparer - Ensures EF change tracking works correctly
+    // --------------------------------------------
+    var tagsComparer = new ValueComparer<List<string>>(
+        (c1, c2) => c1!.SequenceEqual(c2!), // compare two lists
+        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v!.GetHashCode())), // hash
+        c => c.ToList() // clone
+    );
+
+    // Apply converter + value comparer
+    modelBuilder.Entity<MoodEntry>()
+        .Property(m => m.Tags)
+        .HasConversion(tagsConverter)
+        .Metadata.SetValueComparer(tagsComparer);
+
+    // --------------------------------------------
+    // Indexes & Constraints
+    // --------------------------------------------
     modelBuilder.Entity<User>()
         .HasIndex(u => u.Email)
         .IsUnique();
 
-    // Relationships and cascade behavior
+    // --------------------------------------------
+    // Relationships
+    // --------------------------------------------
     modelBuilder.Entity<MoodEntry>()
         .HasOne(m => m.User)
         .WithMany(u => u.MoodEntries)
@@ -36,6 +73,7 @@ namespace GrowAndGlow.Api.Data
         .WithMany(u => u.RefreshTokens)
         .HasForeignKey(r => r.UserId)
         .OnDelete(DeleteBehavior.Cascade);
-        }
+}
+
     }
 }
