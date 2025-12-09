@@ -3,6 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GrowAndGlow.Api.Repository.Interfaces;
+using GrowAndGlow.Api.Repository.Implementations;
+using GrowAndGlow.Api.Services.Interfaces;
+using GrowAndGlow.Api.Services.Implementations;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +49,19 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
+
+
+// --------------------------------------------------------
+// DEPENDENCY INJECTION — REPOSITORIES
+// --------------------------------------------------------
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMoodRepository, MoodRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>(); 
+
+
 
 // --------------------------------------------------------
 // JWT Authentication

@@ -12,12 +12,12 @@ namespace GrowAndGlow.Api.Models
         public required string Email { get; set; }
 
         [Required]
-        public required string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = string.Empty;
 
         [Required]
         public required string DisplayName { get; set; }
 
-        public string? ZodiacSign { get; set; }
+        public string ZodiacSign { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
