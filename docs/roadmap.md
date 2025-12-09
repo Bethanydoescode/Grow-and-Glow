@@ -10,13 +10,13 @@ This roadmap outlines the planned phases of development for **Grow & Glow**, a f
 
 | Task                                | Status |
 | ----------------------------------- | :----: |
-| Create GitHub repository            |   ☐    |
-| Add README + project vision         |   ☐    |
-| Create `/docs` folder + Roadmap     |   ☐    |
-| Set up branching & commit standards |   ☐    |
-| Create backend folder               |   ☐    |
-| Create frontend folder              |   ☐    |
-| Add .gitignore & .gitattributes     |   ☐    |
+| Create GitHub repository            |   ✅   |
+| Add README + project vision         |   ✅   |
+| Create `/docs` folder + Roadmap     |   ✅   |
+| Set up branching & commit standards |   ✅   |
+| Create backend folder               |   ✅   |
+| Create frontend folder              |   ✅   |
+| Add .gitignore & .gitattributes     |   ✅   |
 
 ---
 
@@ -24,9 +24,9 @@ This roadmap outlines the planned phases of development for **Grow & Glow**, a f
 
 **Goal:** Build secure, scalable API foundation.
 
-| Setup ASP.NET Core Web API project | ☐ |
+| Setup ASP.NET Core Web API project | ✅ |
 | Add SQLite database + EF Core | ☐ |
-| Create models: User, MoodEntry, RefreshToken | ☐ |
+| Create models: User, MoodEntry, RefreshToken | ✅ |
 | Configure DbContext + migrations | ☐ |
 | JWT auth: access + refresh tokens | ☐ |
 | Auth endpoints (register, login, refresh) | ☐ |
